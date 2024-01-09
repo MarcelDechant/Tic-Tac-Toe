@@ -3,6 +3,11 @@ body {
     font-family: "Open Sans", sans-serif;
     margin: 0;
     color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
 }
 
 h1 {
@@ -31,8 +36,8 @@ td {
     cursor: pointer;
 }
 
-td:hover{
-background-color: rgba(255,255,255,0.3);
+td:hover {
+    background-color: rgba(255, 255, 255, 0.3);
 }
 
 table td {
@@ -54,4 +59,18 @@ table tr:last-child td {
 table tr td:last-child {
     border-right: 0;
 }
- 
+
+
+button {
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-top: 30px;
+}
+button:hover{
+    background-color: #45a049;
+}

@@ -31,7 +31,7 @@ function render() {
             } else if (fields[index] === 'cross') {
                 symbol = generateCrossSVG();
             }
-            
+
             tableHtml += `<td onclick="handleClick(this, ${index})">${symbol}</td>`;
         }
         tableHtml += '</tr>';
@@ -42,8 +42,8 @@ function render() {
     checkGameOver();
 }
 
-  
-  function handleClick(cell, index) {
+
+function handleClick(cell, index) {
     if (fields[index] === null) {
         fields[index] = currentPlayer;
         cell.innerHTML = currentPlayer === 'circle' ? generateCircleSVG() : generateCrossSVG();
@@ -104,41 +104,55 @@ function generateCrossSVG() {
 
 function checkGameOver() {
     const winningCombinations = [
-      [0, 1, 2], [3, 4, 5], [6, 7, 8], // Horizontale Kombinationen
-      [0, 3, 6], [1, 4, 7], [2, 5, 8], // Vertikale Kombinationen
-      [0, 4, 8], [2, 4, 6] // Diagonale Kombinationen
+        [0, 1, 2], [3, 4, 5], [6, 7, 8], // Horizontale Kombinationen
+        [0, 3, 6], [1, 4, 7], [2, 5, 8], // Vertikale Kombinationen
+        [0, 4, 8], [2, 4, 6] // Diagonale Kombinationen
     ];
-  
+
     for (const combination of winningCombinations) {
-      const [a, b, c] = combination;
-  
-      if (fields[a] && fields[a] === fields[b] && fields[a] === fields[c]) {
-        drawWinningLine(a, b, c);
-        break;
-      }
+        const [a, b, c] = combination;
+
+        if (fields[a] && fields[a] === fields[b] && fields[a] === fields[c]) {
+            drawWinningLine(a, b, c);
+            break;
+        }
     }
-  }
-  function drawWinningLine(a, b, c) {
+}
+function drawWinningLine(a, b, c) {
     const table = document.getElementsByTagName('table')[0];
     const rows = table.getElementsByTagName('tr');
-  
+
     const cellA = rows[Math.floor(a / 3)].getElementsByTagName('td')[a % 3];
     const cellB = rows[Math.floor(b / 3)].getElementsByTagName('td')[b % 3];
     const cellC = rows[Math.floor(c / 3)].getElementsByTagName('td')[c % 3];
-  
+
     const canvas = document.createElement('canvas');// canvas ist eine animations- Element in js ahnlich wie die svg in html 
     const context = canvas.getContext('2d');
-    canvas.style.position ='absolute';
+    canvas.style.position = 'absolute';
     canvas.width = table.offsetWidth;
     canvas.height = table.offsetHeight;
-  
+
     context.strokeStyle = '#FFFFFF';
     context.lineWidth = 5;
     context.beginPath();
     context.moveTo(cellA.offsetLeft + cellA.offsetWidth / 2, cellA.offsetTop + cellA.offsetHeight / 2);
     context.lineTo(cellC.offsetLeft + cellC.offsetWidth / 2, cellC.offsetTop + cellC.offsetHeight / 2);
     context.stroke();
-  
+
     table.parentNode.insertBefore(canvas, table.nextSibling);
-  }
-  
+}
+
+function restartGame(){
+    fields = [
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+    ];
+    render();
+}
