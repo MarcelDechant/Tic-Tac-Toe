@@ -19,28 +19,36 @@ function init() {
 
 function render() {
     const contentDiv = document.getElementById('content');
+    const playerDiv = document.getElementById('whichPlayer'); // Neuer Code: Div-Container für den aktuellen Spieler
+  
     // Generate table HTML
     let tableHtml = '<table>';
     for (let i = 0; i < 3; i++) {
-        tableHtml += '<tr>';
-        for (let j = 0; j < 3; j++) {
-            const index = i * 3 + j;
-            let symbol = '';
-            if (fields[index] === 'circle') {
-                symbol = generateCircleSVG();
-            } else if (fields[index] === 'cross') {
-                symbol = generateCrossSVG();
-            }
-
-            tableHtml += `<td onclick="handleClick(this, ${index})">${symbol}</td>`;
+      tableHtml += '<tr>';
+      for (let j = 0; j < 3; j++) {
+        const index = i * 3 + j;
+        let symbol = '';
+        if (fields[index] === 'circle') {
+          symbol = generateCircleSVG();
+        } else if (fields[index] === 'cross') {
+          symbol = generateCrossSVG();
         }
-        tableHtml += '</tr>';
+        tableHtml += `<td onclick="handleClick(this, ${index})">${symbol}</td>`;
+      }
+      tableHtml += '</tr>';
     }
     tableHtml += '</table>';
+  
     // Set table HTML to contentDiv
     contentDiv.innerHTML = tableHtml;
+  
+    // Update current player display
+    playerDiv.innerHTML = `<p>Start Spieler:</p>`; // Neuer Code: Anzeige des aktuellen Spielers
+    playerDiv.innerHTML += currentPlayer === 'circle' ? generateCircleSVG() : generateCrossSVG(); // Neuer Code: Anzeige der Animation
+  
     checkGameOver();
-}
+  }
+  
 
 
 function handleClick(cell, index) {
